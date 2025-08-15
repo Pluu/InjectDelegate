@@ -13,19 +13,29 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 inline fun <reified T> ComponentActivity.savedInject(
-    noinline init: () -> T
-): ReadWriteProperty<Any?, T> =
+    noinline init: () -> T? = { null }
+): ReadWriteProperty<Any?, T?> =
     InjectDelegate(savedStateRegistry, { intent?.extras }, init)
 
 inline fun <reified T> Fragment.savedInject(
-    noinline init: () -> T
+    noinline init: () -> T? = { null }
+): ReadWriteProperty<Any?, T?> =
+    InjectDelegate(savedStateRegistry, { arguments }, init)
+
+inline fun <reified T : Any> ComponentActivity.savedInjectNonNull(
+    noinline init: () -> T = { throw IllegalStateException(">>>>") }
+): ReadWriteProperty<Any?, T> =
+    InjectDelegate(savedStateRegistry, { intent?.extras }, init)
+
+inline fun <reified T : Any> Fragment.savedInjectNonNull(
+    noinline init: () -> T = { throw IllegalStateException(">>>>") }
 ): ReadWriteProperty<Any?, T> =
     InjectDelegate(savedStateRegistry, { arguments }, init)
 
 class InjectDelegate<T>(
     private val registry: SavedStateRegistry,
     private val bundle: () -> Bundle?,
-    private val init: () -> T,
+    private val init: () -> T?,
 ) : ReadWriteProperty<Any?, T>, SavedStateRegistry.SavedStateProvider {
 
     private object UNINITIALIZED
