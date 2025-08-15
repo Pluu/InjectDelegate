@@ -16,8 +16,11 @@ class FirstActivity : ComponentActivity() {
             val context = LocalContext.current
             SavedSampleTheme {
                 SampleLayout(title = "Sample") {
-                    ListItem(title = "Inject") {
-                        SecondActivity.start(context)
+                    ListItem(title = "Inject value") {
+                        ValueTestActivity.start(context)
+                    }
+                    ListItem(title = "Inject variable") {
+                        VariableTestActivity.start(context)
                     }
                 }
             }

@@ -4,7 +4,58 @@
 
 - 참고 : [SavedStateRegistryOwnerDelegate](https://github.com/androidx/androidx/blob/androidx-main/savedstate/savedstate/src/commonMain/kotlin/androidx/savedstate/serialization/SavedStateRegistryOwnerDelegate.kt)
 
-|            Default             |            Recreate             |
-| :----------------------------: | :-----------------------------: |
-| <img src="arts/default.png" /> | <img src="arts/recreate.png" /> |
+## DTO
+
+```kotlin
+data class UserDto(
+    val id: Int,
+    val name: String
+) : Serializable
+```
+
+## Sample value
+
+```kotlin
+class SampleActivity : ComponentActivity() {
+   // non-null
+   private val requiredUser by savedInjectNonNull<UserDto>()
+   private val requiredUserLambda by savedInjectNonNull<UserDto> {
+      UserDto(id = 2, name = "lambda")
+   }
+
+   // nullable
+   private val optionUser by savedInject<UserDto>()
+   private val optionUserLambda by savedInject<UserDto> {
+      UserDto(id = 3, name = "option lambda")
+   }
+}
+```
+
+|                    Default                     |
+| :--------------------------------------------: |
+| <img src="arts/default_value.png" width=300 /> |
+
+## Sample variable
+
+```kotlin
+class SampleActivity : ComponentActivity() {
+   // non-null
+   private var requiredUser by savedInjectNonNull<UserDto>()
+   private var requiredUserLambda by savedInjectNonNull<UserDto> {
+      UserDto(id = 2, name = "lambda")
+   }
+
+   // nullable
+   private var optionUser by savedInject<UserDto>()
+   private var optionUserLambda by savedInject<UserDto> {
+      UserDto(id = 3, name = "option lambda")
+   }
+}
+```
+
+
+
+|                 Default                  |                 Recreate                  |
+| :--------------------------------------: | :---------------------------------------: |
+| <img src="arts/default.png" width=300 /> | <img src="arts/recreate.png" width=300 /> |
 

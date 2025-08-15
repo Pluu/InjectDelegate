@@ -23,7 +23,7 @@ import com.pluu.sample.saved.utils.savedInjectNonNull
 import com.pluu.utils.startActivity
 import timber.log.Timber
 
-class SecondActivity : ComponentActivity() {
+class VariableTestActivity : ComponentActivity() {
     private lateinit var beforeRequiredUser: UserDto
     private var requiredUser by savedInjectNonNull<UserDto>()
 
@@ -42,7 +42,7 @@ class SecondActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.d("Before UserDto: %s", requiredUser)
+        Timber.d("Before")
         beforeRequiredUser = requiredUser
         beforeRequiredUserLambda = requiredUserLambda
         beforeOptionUser = optionUser
@@ -70,7 +70,7 @@ class SecondActivity : ComponentActivity() {
                         after = "$requiredUser"
                     )
                     Sample(
-                        title = "Required Lambda",
+                        title = "Required Lambda (default)",
                         before = "$beforeRequiredUserLambda",
                         after = "$requiredUserLambda"
                     )
@@ -80,7 +80,7 @@ class SecondActivity : ComponentActivity() {
                         after = "$optionUser"
                     )
                     Sample(
-                        title = "Optional",
+                        title = "Optional Lambda (default)",
                         before = "$beforeOptionUserLambda",
                         after = "$optionUserLambda"
                     )
@@ -115,7 +115,7 @@ class SecondActivity : ComponentActivity() {
 
     companion object {
         fun start(context: Context) {
-            context.startActivity<SecondActivity>(
+            context.startActivity<VariableTestActivity>(
                 "requiredUser" to UserDto(id = 1, name = "required")
             )
         }

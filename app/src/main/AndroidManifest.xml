@@ -9,7 +9,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SavedSample">
         <activity
-            android:name=".SecondActivity"
+            android:name=".VariableTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ValueTestActivity"
             android:exported="false" />
         <activity
             android:name=".FirstActivity"
