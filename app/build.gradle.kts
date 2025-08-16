@@ -68,7 +68,6 @@ dependencies {
     implementation(libs.androidx.activity)
 
     testImplementation(libs.junit)
-    testImplementation(libs.robolectric)
     androidTestImplementation(libs.androidx.test.core.ktx)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
