@@ -18,7 +18,7 @@ private val requiredUserDto = UserDto(id = 1, name = "Required Lambda")
 private val optionUserDto = UserDto(id = 1, name = "Option Lambda")
 
 @RunWith(RobolectricTestRunner::class)
-class InjectTest {
+class ActivityInjectTest {
 
     private val newValue = UserDto(id = 1234, name = "New User")
 
