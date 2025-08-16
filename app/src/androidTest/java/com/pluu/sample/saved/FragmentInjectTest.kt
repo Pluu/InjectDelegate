@@ -1,13 +1,10 @@
 package com.pluu.sample.saved
 
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.withFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.pluu.sample.saved.model.UserDto
-import com.pluu.sample.saved.utils.savedInject
-import com.pluu.sample.saved.utils.savedInjectNonNull
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
@@ -193,20 +190,3 @@ class FragmentInjectTest {
     }
 }
 
-class SampleFragment : Fragment() {
-    var requiredUser by savedInjectNonNull<UserDto>()
-    var requiredUserLambda by savedInjectNonNull<UserDto> { requiredUserDto }
-
-    var optionUser by savedInject<UserDto>()
-    var optionUserLambda by savedInject<UserDto> { optionUserDto }
-
-    fun updateUser(value: UserDto) {
-        requiredUser = value
-        requiredUserLambda = value
-    }
-
-    fun updateOptionUser(value: UserDto?) {
-        optionUser = value
-        optionUserLambda = value
-    }
-}

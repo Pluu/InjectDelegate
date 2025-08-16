@@ -1,32 +1,28 @@
 package com.pluu.sample.saved
 
-import androidx.activity.ComponentActivity
+import androidx.test.core.app.launchActivity
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.testutils.withActivity
 import com.pluu.sample.saved.model.UserDto
-import com.pluu.sample.saved.utils.savedInject
-import com.pluu.sample.saved.utils.savedInjectNonNull
 import com.pluu.utils.buildIntent
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Robolectric
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 
-private val requiredUserDto = UserDto(id = 1, name = "Required Lambda")
-private val optionUserDto = UserDto(id = 1, name = "Option Lambda")
-
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AndroidJUnit4::class)
 class ActivityInjectTest {
+
+    private val context = InstrumentationRegistry.getInstrumentation().targetContext
 
     private val newValue = UserDto(id = 1234, name = "New User")
 
     @Test
     fun requiredWithError() {
-        Robolectric.buildActivity(SampleActivity::class.java).use { controller ->
-            controller.setup()
-            with(controller.get()) {
+        with(launchActivity<SampleActivity>()) {
+            withActivity {
                 assertThrows(IllegalStateException::class.java) {
                     requiredUser
                 }
@@ -38,21 +34,21 @@ class ActivityInjectTest {
     fun requiredWithInitData() {
         val expectedValue = UserDto(id = 1, name = "abcd")
 
-        val intent = RuntimeEnvironment.getApplication().buildIntent<SampleActivity>(
+        val intent = context.buildIntent<SampleActivity>(
             "requiredUser" to expectedValue
         )
-        Robolectric.buildActivity(SampleActivity::class.java, intent).use { controller ->
-            controller.setup()
-            with(controller.get()) {
+        with(launchActivity<SampleActivity>(intent)) {
+            withActivity {
                 assertEquals(expectedValue, requiredUser)
             }
-
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(expectedValue, requiredUser)
                 updateUser(newValue)
                 assertEquals(newValue, requiredUser)
             }
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(newValue, requiredUser)
             }
         }
@@ -60,19 +56,18 @@ class ActivityInjectTest {
 
     @Test
     fun requiredLambdaWithDefaultData() {
-        Robolectric.buildActivity(SampleActivity::class.java).use { controller ->
-            controller.setup()
-
-            with(controller.get()) {
+        with(launchActivity<SampleActivity>()) {
+            withActivity {
                 assertEquals(requiredUserDto, requiredUserLambda)
             }
-
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(requiredUserDto, requiredUserLambda)
                 updateUser(newValue)
                 assertEquals(newValue, requiredUserLambda)
             }
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(newValue, requiredUserLambda)
             }
         }
@@ -82,21 +77,21 @@ class ActivityInjectTest {
     fun requiredLambdaWithInitData() {
         val expectedValue = UserDto(id = 1, name = "abcd")
 
-        val intent = RuntimeEnvironment.getApplication().buildIntent<SampleActivity>(
+        val intent = context.buildIntent<SampleActivity>(
             "requiredUserLambda" to expectedValue
         )
-        Robolectric.buildActivity(SampleActivity::class.java, intent).use { controller ->
-            controller.setup()
-            with(controller.get()) {
+        with(launchActivity<SampleActivity>(intent)) {
+            withActivity {
                 assertEquals(expectedValue, requiredUserLambda)
             }
-
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(expectedValue, requiredUserLambda)
                 updateUser(newValue)
                 assertEquals(newValue, requiredUserLambda)
             }
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(newValue, requiredUserLambda)
             }
         }
@@ -104,18 +99,18 @@ class ActivityInjectTest {
 
     @Test
     fun optionNull() {
-        Robolectric.buildActivity(SampleActivity::class.java).use { controller ->
-            controller.setup()
-            with(controller.get()) {
+        with(launchActivity<SampleActivity>()) {
+            withActivity {
                 assertNull(optionUser)
             }
-
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertNull(optionUser)
                 updateOptionUser(newValue)
                 assertEquals(newValue, optionUser)
             }
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(newValue, optionUser)
             }
         }
@@ -125,21 +120,21 @@ class ActivityInjectTest {
     fun optionWithInitData() {
         val expectedValue = UserDto(id = 1, name = "abcd")
 
-        val intent = RuntimeEnvironment.getApplication().buildIntent<SampleActivity>(
+        val intent = context.buildIntent<SampleActivity>(
             "optionUser" to expectedValue
         )
-        Robolectric.buildActivity(SampleActivity::class.java, intent).use { controller ->
-            controller.setup()
-            with(controller.get()) {
+        with(launchActivity<SampleActivity>(intent)) {
+            withActivity {
                 assertEquals(expectedValue, optionUser)
             }
-
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(expectedValue, optionUser)
                 updateOptionUser(newValue)
                 assertEquals(newValue, optionUser)
             }
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(newValue, optionUser)
             }
         }
@@ -147,19 +142,18 @@ class ActivityInjectTest {
 
     @Test
     fun optionLambdaWithDefaultData() {
-        Robolectric.buildActivity(SampleActivity::class.java).use { controller ->
-            controller.setup()
-
-            with(controller.get()) {
+        with(launchActivity<SampleActivity>()) {
+            withActivity {
                 assertEquals(optionUserDto, optionUserLambda)
             }
-
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(optionUserDto, optionUserLambda)
                 updateOptionUser(newValue)
                 assertEquals(newValue, optionUserLambda)
             }
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(newValue, optionUserLambda)
             }
         }
@@ -169,42 +163,23 @@ class ActivityInjectTest {
     fun optionLambdaWithInitData() {
         val expectedValue = UserDto(id = 1, name = "abcd")
 
-        val intent = RuntimeEnvironment.getApplication().buildIntent<SampleActivity>(
+        val intent = context.buildIntent<SampleActivity>(
             "optionUserLambda" to expectedValue
         )
-        Robolectric.buildActivity(SampleActivity::class.java, intent).use { controller ->
-            controller.setup()
-
-            with(controller.get()) {
+        with(launchActivity<SampleActivity>(intent)) {
+            withActivity {
                 assertEquals(expectedValue, optionUserLambda)
             }
-
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(expectedValue, optionUserLambda)
                 updateOptionUser(newValue)
                 assertEquals(newValue, optionUserLambda)
             }
-            with(controller.recreate().get()) {
+            recreate()
+            withActivity {
                 assertEquals(newValue, optionUserLambda)
             }
         }
-    }
-}
-
-class SampleActivity : ComponentActivity() {
-    var requiredUser by savedInjectNonNull<UserDto>()
-    var requiredUserLambda by savedInjectNonNull<UserDto> { requiredUserDto }
-
-    var optionUser by savedInject<UserDto>()
-    var optionUserLambda by savedInject<UserDto> { optionUserDto }
-
-    fun updateUser(value: UserDto) {
-        requiredUser = value
-        requiredUserLambda = value
-    }
-
-    fun updateOptionUser(value: UserDto?) {
-        optionUser = value
-        optionUserLambda = value
     }
 }
