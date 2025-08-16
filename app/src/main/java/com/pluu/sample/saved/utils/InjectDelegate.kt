@@ -32,6 +32,17 @@ inline fun <reified T : Any> Fragment.savedInjectNonNull(
 ): ReadWriteProperty<Any?, T> =
     InjectDelegate(savedStateRegistry, { arguments }, init)
 
+/**
+ * [SavedStateRegistry]에 값을 저장하고 복원할 수 있도록 하는 프로퍼티 위임입니다.
+ *
+ * 이 위임은 Activity 및 Fragment와 같은 Android Component와 함께 작동하도록 설계되었습니다.
+ * Configuration change 또는 프로세스 종료 시 상태를 저장하고 복원합니다.
+ *
+ * @param T 값의 유형.
+ * @property registry 상태를 저장하고 복원하는 데 사용할 [SavedStateRegistry] 인스턴스
+ * @property bundle [SavedState]에서 값을 찾을 수 없는 경우, 검색할 수 있는 초기 [Bundle] (예: Activity의 Intent extras / Fragment의 arguments)을 제공하는 lambda 함수
+ * @property init 찾을 수 없는 경우, 기본 초기 값을 제공하는 lambda 함수
+ */
 class InjectDelegate<T>(
     private val registry: SavedStateRegistry,
     private val bundle: () -> Bundle?,
