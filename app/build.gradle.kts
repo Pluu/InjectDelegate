@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.pluu.sample.saved"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -65,6 +65,10 @@ dependencies {
     implementation(libs.androidx.activity)
 
     testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(project(":testutils"))
+
+    androidTestImplementation(project(":testutils"))
     androidTestImplementation(libs.androidx.test.core.ktx)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

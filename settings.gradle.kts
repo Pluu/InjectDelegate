@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "SavedSample"
 include(":app")
+include(":testutils")

@@ -13,6 +13,8 @@ timber = "5.0.1"
 appcompat = "1.7.1"
 material = "1.14.0"
 activity = "1.13.0"
+robolectric = "4.16.1"
+androidxJunit = "1.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
@@ -41,6 +43,8 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 
 [bundles]
 androidX-compose = [
@@ -67,3 +71,4 @@ androidX-compose-ui-test = [
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
